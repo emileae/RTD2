@@ -27,6 +27,9 @@
         border: 1px solid black;
       }
     </style>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
   </head>
   <body>
     <canvas id="myCanvas" width="256" height="256"></canvas>
@@ -180,6 +183,7 @@
     // device APIs are available
     //
     function onDeviceReady() {
+        alert("device ready");
         startWatch();
     };
 
