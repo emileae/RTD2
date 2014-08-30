@@ -181,7 +181,15 @@
     //
     function onDeviceReady() {
         startWatch();
-    }
+    };
+
+    function onSuccess(acceleration) {
+        var element = document.getElementById('acc_div');
+        element.innerHTML = 'Acceleration X: ' + acceleration.x         + '<br />' +
+                            'Acceleration Y: ' + acceleration.y         + '<br />' +
+                            'Acceleration Z: ' + acceleration.z         + '<br />' +
+                            'Timestamp: '      + acceleration.timestamp + '<br />';
+    };
 
     // Start watching the acceleration
     //
@@ -191,9 +199,10 @@
         var options = { frequency: 100 };
 
         console.log("navigator.accelerometer");
-        console.log(navigator.accelerometer);
         watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
-    }
+        console.log("watchID...");
+        console.log(watchID);
+    };
 
     // Stop watching the acceleration
     //
@@ -202,27 +211,16 @@
             navigator.accelerometer.clearWatch(watchID);
             watchID = null;
         }
-    }
-
-    // onSuccess: Get a snapshot of the current acceleration
-    //
-    function onSuccess(acceleration) {
-        var element = document.getElementById('acc_div');
-        element.innerHTML = 'Acceleration X: ' + acceleration.x         + '<br />' +
-                            'Acceleration Y: ' + acceleration.y         + '<br />' +
-                            'Acceleration Z: ' + acceleration.z         + '<br />' +
-                            'Timestamp: '      + acceleration.timestamp + '<br />';
-    }
+    };
 
     // onError: Failed to get the acceleration
     //
     function onError() {
         alert('onError!');
-    }
+    };
 
     $("body").on("touchend", "#acc_div", function(){
       startWatch();
-      console.log(navigator.accelerometer);
     });
 
     </SCRIPT>
