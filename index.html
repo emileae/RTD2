@@ -38,6 +38,15 @@
 
     <SCRIPT TYPE="text/javascript" src="libs/jquery-1.11.1.min.js"></SCRIPT>
     <script>
+
+      var mouseDown = false;
+      var img_width = "";
+      var img_height = "";
+      var padding = 0;
+      var canvas = "";
+      var context = "";
+
+
       function componentToHex(c) {
       var hex = c.toString(16);
           return hex.length == 1 ? "0" + hex : hex;
@@ -120,13 +129,6 @@
 
       };
 
-      var mouseDown = false;
-      var img_width = "";
-      var img_height = "";
-      var padding = 0;
-      var canvas = "";
-      var context = "";
-
       function init(imageObj) {
         padding = 0;
 
@@ -200,6 +202,7 @@
     // device APIs are available
     //
     function onDeviceReady() {
+        alert("watching");
         startWatch();
     };
 
@@ -208,7 +211,8 @@
 
         var x = acceleration.x;
         var y = acceleration.y;
-
+        console.log(x);
+        console.log(y);
         /*element.innerHTML = 'Acceleration X: ' + acceleration.x         + '<br />' +
                             'Acceleration Y: ' + acceleration.y         + '<br />' +
                             'Acceleration Z: ' + acceleration.z         + '<br />' +
