@@ -220,6 +220,11 @@
         alert('onError!');
     }
 
+    $("body").on("touchend", "#acc_div", function(){
+      startWatch();
+      console.log(navigator.accelerometer);
+    });
+
     </SCRIPT>
 
   </body>
