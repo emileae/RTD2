@@ -26,6 +26,12 @@
         height: 50px;
         border: 1px solid black;
       }
+      #target{
+        width: 10px;
+        height: 10px;
+        border: 1px solid red;
+        position: absolute;
+      }
     </style>
 
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
@@ -35,9 +41,17 @@
     <canvas id="myCanvas" width="256" height="256"></canvas>
     <div id="color_div"></div>
     <div id="acc_div"></div>
+    <div id="target"></div>
 
     <SCRIPT TYPE="text/javascript" src="libs/jquery-1.11.1.min.js"></SCRIPT>
     <script>
+
+      function position_target(mousePos){
+        var position = $("#myCanvas").position();
+
+        $("#target").css("top", position.top + mousePos.y);
+        $("#target").css("left", position.left + mousePos.x);
+      };
 
       var mouseDown = false;
       var img_width = "";
@@ -45,6 +59,8 @@
       var padding = 0;
       var canvas = "";
       var context = "";
+      var mousePos = {x: 100, y: 100};
+      position_target(mousePos);
 
 
       function componentToHex(c) {
@@ -55,8 +71,6 @@
           return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
       }
 
-
-      var mousePos = {x: 100, y: 100};
       function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
         return {
@@ -76,7 +90,7 @@
         context.fillStyle = color;
         context.fillRect(squareX, squareY, colorSquareSize, colorSquareSize);
         context.strokeRect(squareX, squareY, colorSquareSize, colorSquareSize);
-      }
+      };
       
 
       function rgbToHsl(r, g, b){
@@ -213,7 +227,7 @@
             $("#color_div").css("color", comp_color);
           };
 
-          drawColorSquare(canvas, color, mousePos);
+          position_target(mousePos);
 
         };
 
