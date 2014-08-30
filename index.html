@@ -44,8 +44,8 @@
         console.log("rect");
         console.log(rect);
         return {
-          x: evt..changedTouches[0].pageX - rect.left,
-          y: evt..changedTouches[0].pageY - rect.top
+          x: evt.changedTouches[0].pageX - rect.left,
+          y: evt.changedTouches[0].pageY - rect.top
         };
       }
       function rgbToHsl(r, g, b){
