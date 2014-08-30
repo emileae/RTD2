@@ -25,6 +25,7 @@
 
     <gap:plugin name="org.apache.cordova.device-motion" version="0.2.6" />
 
+    <preference name="Orientation" value="portrait" />
     <preference name="webviewbounce" value="false"/>
     <preference name="UIWebViewBounce" value="false"/>
     <preference name="DisallowOverscroll" value="true"/>

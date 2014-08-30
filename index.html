@@ -46,6 +46,8 @@
           return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
       }
 
+
+      var mousePos = {x: 100, y: 100};
       function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
         return {
@@ -53,6 +55,8 @@
           y: evt.changedTouches[0].pageY - rect.top
         };
       }
+      
+
       function rgbToHsl(r, g, b){
           r /= 255, g /= 255, b /= 255;
           var max = Math.max(r, g, b), min = Math.min(r, g, b);
@@ -136,7 +140,11 @@
         }, false);
 
         canvas.addEventListener('touchmove', function(evt) {
-          var mousePos = getMousePos(canvas, evt);
+          mousePos = getMousePos(canvas, evt);
+          render_color(mousePos);
+        }, false);
+
+        function render_color(mousePos){
           var color = undefined;
 
           if(mouseDown && mousePos !== null) {
@@ -159,7 +167,7 @@
             $("#color_div").text(hex_val);
             $("#color_div").css("color", comp_color);
           }
-        }, false);
+        };
 
         context.drawImage(imageObj, 0, 0);
 
@@ -183,16 +191,26 @@
     // device APIs are available
     //
     function onDeviceReady() {
-        alert("device ready");
         startWatch();
     };
 
     function onSuccess(acceleration) {
         var element = document.getElementById('acc_div');
-        element.innerHTML = 'Acceleration X: ' + acceleration.x         + '<br />' +
+
+        var x = acceleration.x;
+        var y = acceleration.y;
+
+        /*element.innerHTML = 'Acceleration X: ' + acceleration.x         + '<br />' +
                             'Acceleration Y: ' + acceleration.y         + '<br />' +
                             'Acceleration Z: ' + acceleration.z         + '<br />' +
-                            'Timestamp: '      + acceleration.timestamp + '<br />';
+                            'Timestamp: '      + acceleration.timestamp + '<br />';*/
+
+        mousePos.x += Math.floor(x);
+        mousePos.y += Math.floor(y);
+
+        element.innerHTML = "x: "+Math.floor(x)+" y: "+Math.floor(y)+", mousePos: "+mousePos.x+", "+mousePos.y;
+
+        render_color(mousePos);
     };
 
     // Start watching the acceleration
@@ -202,10 +220,7 @@
         // Update acceleration every 3 seconds
         var options = { frequency: 100 };
 
-        console.log("navigator.accelerometer");
         watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
-        console.log("watchID...");
-        console.log(watchID);
     };
 
     // Stop watching the acceleration
@@ -222,10 +237,6 @@
     function onError() {
         alert('onError!');
     };
-
-    $("body").on("touchend", "#acc_div", function(){
-      startWatch();
-    });
 
     </SCRIPT>
 
