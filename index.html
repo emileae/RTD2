@@ -151,7 +151,7 @@
 
         canvas.addEventListener('touchmove', function(evt) {
           mousePos = getMousePos(canvas, evt);
-          render_color(mousePos);
+          render_color(mousePos, false);
         }, false);
 
         context.drawImage(imageObj, 0, 0);
@@ -164,13 +164,27 @@
       };
       imageObj.src = 'images/color-picker.png';
 
-      function render_color(mousePos){
+      function render_color(mousePos, tilt){
           var color = undefined;
+          if( !tilt ){
+            if(mouseDown && mousePos !== null) {
+              var imageData = context.getImageData(padding, padding, imageObj.width, imageObj.height);
+              var data = imageData.data;
+              var x = mousePos.x - padding;
+              var y = mousePos.y - padding;
+              var red = data[((imageObj.width * y) + x) * 4];
+              var green = data[((imageObj.width * y) + x) * 4 + 1];
+              var blue = data[((imageObj.width * y) + x) * 4 + 2];
+              var color = 'rgb(' + red + ',' + green + ',' + blue + ')';
 
-          if(mouseDown && mousePos !== null) {
-
-            // color picker image is 256x256 and is offset by 10px
-            // from top and bottom
+              $("body").css("background-color", color);
+              var hex_val = rgbToHex(red, green, blue);
+              var hsl_array = rgbToHsl(red, green, blue);
+              var comp_color = compHSL(hsl_array);
+              $("#color_div").text(hex_val);
+              $("#color_div").css("color", comp_color);
+            }
+          }else{
             var imageData = context.getImageData(padding, padding, imageObj.width, imageObj.height);
             var data = imageData.data;
             var x = mousePos.x - padding;
@@ -186,7 +200,7 @@
             var comp_color = compHSL(hsl_array);
             $("#color_div").text(hex_val);
             $("#color_div").css("color", comp_color);
-          }
+          };
         };
 
     </script>
@@ -220,7 +234,7 @@
 
         element.innerHTML = "x: "+Math.floor(x)+" y: "+Math.floor(y)+", mousePos: "+mousePos.x+", "+mousePos.y;
 
-        render_color(mousePos);
+        render_color(mousePos, true);
     };
 
     // Start watching the acceleration
