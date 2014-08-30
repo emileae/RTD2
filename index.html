@@ -232,6 +232,17 @@
         mousePos.x += Math.floor(x);
         mousePos.y += Math.floor(y);
 
+        if(mousePos.x >= 255){
+          mousePos.x = 255;
+        }else if( mousePos.x <= 0 ){
+          mousePos.x = 0;
+        };
+        if(mousePos.y >= 255){
+          mousePos.y = 255;
+        }else if( mousePos.y <= 0 ){
+          mousePos.y = 0;
+        };
+
         element.innerHTML = "x: "+Math.floor(x)+" y: "+Math.floor(y)+", mousePos: "+mousePos.x+", "+mousePos.y;
 
         render_color(mousePos, true);
