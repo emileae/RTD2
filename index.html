@@ -40,6 +40,7 @@
 
       function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
+        console.log(evt.clientX - rect.left+", "+evt.clientY - rect.top);
         return {
           x: evt.clientX - rect.left,
           y: evt.clientY - rect.top
@@ -121,14 +122,17 @@
 
         canvas.addEventListener('touchstart', function() {
           mouseDown = true;
+          console.log("touchstart");
         }, false);
 
         canvas.addEventListener('touchend', function() {
           mouseDown = false;
+          console.log("touchend");
         }, false);
 
         canvas.addEventListener('touchmove', function(evt) {
           var mousePos = getMousePos(canvas, evt);
+          console.log("touchmove");
           var color = undefined;
 
           if(mouseDown && mousePos !== null) {
