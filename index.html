@@ -66,6 +66,17 @@
           y: evt.clientY - rect.top*/
         };
       }
+      function drawColorSquare(canvas, color, mousePos) {
+        var colorSquareSize = 10;
+        var context = canvas.getContext('2d');
+        var squareX = mousePos.x;
+        var squareY = mousePos.y;
+
+        context.beginPath();
+        context.fillStyle = color;
+        context.fillRect(squareX, squareY, colorSquareSize, colorSquareSize);
+        context.strokeRect(squareX, squareY, colorSquareSize, colorSquareSize);
+      }
       
 
       function rgbToHsl(r, g, b){
@@ -201,6 +212,9 @@
             $("#color_div").text(hex_val);
             $("#color_div").css("color", comp_color);
           };
+
+          drawColorSquare(canvas, color, mousePos);
+
         };
 
     </script>
@@ -229,7 +243,7 @@
                             'Acceleration Z: ' + acceleration.z         + '<br />' +
                             'Timestamp: '      + acceleration.timestamp + '<br />';*/
 
-        mousePos.x += Math.floor(x);
+        mousePos.x += -Math.floor(x);
         mousePos.y += Math.floor(y);
 
         if(mousePos.x >= 255){
