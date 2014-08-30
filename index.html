@@ -28,7 +28,7 @@
       }
     </style>
 
-    <!--<script type="text/javascript" charset="utf-8" src="cordova.js"></script>-->
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
   </head>
   <body>
@@ -202,7 +202,6 @@
     // device APIs are available
     //
     function onDeviceReady() {
-        alert("watching");
         startWatch();
     };
 
@@ -211,8 +210,6 @@
 
         var x = acceleration.x;
         var y = acceleration.y;
-        console.log(x);
-        console.log(y);
         /*element.innerHTML = 'Acceleration X: ' + acceleration.x         + '<br />' +
                             'Acceleration Y: ' + acceleration.y         + '<br />' +
                             'Acceleration Z: ' + acceleration.z         + '<br />' +
