@@ -1,0 +1,189 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      #myCanvas{
+        display: block;
+        margin: auto;
+      }
+      #color_div{
+        width: 100%;
+        height: 100px;
+        border: 1px solid black;
+        text-align: center;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="256" height="256"></canvas>
+    <div id="color_div"></div>
+    <div id="acc_div"></div>
+
+    <SCRIPT TYPE="text/javascript" src="libs/jquery-1.11.1.min.js"></SCRIPT>
+    <script>
+      function componentToHex(c) {
+      var hex = c.toString(16);
+          return hex.length == 1 ? "0" + hex : hex;
+      }
+      function rgbToHex(r, g, b) {
+          return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+      }
+
+      function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+          x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top
+        };
+      }
+      function rgbToHsl(r, g, b){
+          r /= 255, g /= 255, b /= 255;
+          var max = Math.max(r, g, b), min = Math.min(r, g, b);
+          var h, s, l = (max + min) / 2;
+
+          if(max == min){
+              h = s = 0; // achromatic
+          }else{
+              var d = max - min;
+              s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+              switch(max){
+                  case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                  case g: h = (b - r) / d + 2; break;
+                  case b: h = (r - g) / d + 4; break;
+              }
+              h /= 6;
+          }
+
+          return [h, s, l];
+      }
+      function hslToRgb(h, s, l){
+          var r, g, b;
+
+          if(s == 0){
+              r = g = b = l; // achromatic
+          }else{
+              function hue2rgb(p, q, t){
+                  if(t < 0) t += 1;
+                  if(t > 1) t -= 1;
+                  if(t < 1/6) return p + (q - p) * 6 * t;
+                  if(t < 1/2) return q;
+                  if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                  return p;
+              }
+
+              var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+              var p = 2 * l - q;
+              r = hue2rgb(p, q, h + 1/3);
+              g = hue2rgb(p, q, h);
+              b = hue2rgb(p, q, h - 1/3);
+          }
+
+          return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+      }
+      function compHSL(hsl_array){
+        var h = hsl_array[0];
+        var s = hsl_array[1];
+        var l = hsl_array[2];
+
+        var comp_h = 1-h;
+        s = 1-s;
+        l = 1-l;
+
+        var comp_rgb = hslToRgb(comp_h, s, l);
+
+        var comp_hex = rgbToHex(comp_rgb[0], comp_rgb[1], comp_rgb[2]);
+
+        return comp_hex
+
+      };
+
+      function init(imageObj) {
+        var padding = 0;
+
+        var img_width = imageObj.width;
+        var img_height = imageObj.height;
+
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+        var mouseDown = false;
+
+        context.strokeStyle = '#444';
+        context.lineWidth = 2;
+
+        canvas.addEventListener('mousedown', function() {
+          mouseDown = true;
+        }, false);
+
+        canvas.addEventListener('mouseup', function() {
+          mouseDown = false;
+        }, false);
+
+        canvas.addEventListener('mousemove', function(evt) {
+          var mousePos = getMousePos(canvas, evt);
+          var color = undefined;
+
+          if(mouseDown && mousePos !== null) {
+
+            // color picker image is 256x256 and is offset by 10px
+            // from top and bottom
+            var imageData = context.getImageData(padding, padding, imageObj.width, imageObj.height);
+            var data = imageData.data;
+            var x = mousePos.x - padding;
+            var y = mousePos.y - padding;
+            var red = data[((imageObj.width * y) + x) * 4];
+            var green = data[((imageObj.width * y) + x) * 4 + 1];
+            var blue = data[((imageObj.width * y) + x) * 4 + 2];
+            var color = 'rgb(' + red + ',' + green + ',' + blue + ')';
+
+            $("body").css("background-color", color);
+            var hex_val = rgbToHex(red, green, blue);
+            var hsl_array = rgbToHsl(red, green, blue);
+            var comp_color = compHSL(hsl_array);
+            $("#color_div").text(hex_val);
+            $("#color_div").css("color", comp_color);
+          }
+        }, false);
+
+        context.drawImage(imageObj, 0, 0);
+
+      }
+      var imageObj = new Image();
+      imageObj.onload = function() {
+        init(this);
+      };
+      imageObj.src = 'images/color-picker.png';
+
+    </script>
+
+    <SCRIPT TYPE="text/javascript">
+      document.addEventListener("deviceready", onDeviceReady, false);
+
+      function onDeviceReady() {
+        navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
+    }
+
+    // onSuccess: Get a snapshot of the current acceleration
+    //
+    function onSuccess(acceleration) {
+        $("#acc_div").html('Acceleration X: ' + acceleration.x + '<br>' +
+              'Acceleration Y: ' + acceleration.y + '<br>' +
+              'Acceleration Z: ' + acceleration.z + '<br>' +
+              'Timestamp: '      + acceleration.timestamp + '<br>');
+    }
+
+    // onError: Failed to get the acceleration
+    //
+    function onError() {
+        alert('onError!');
+    }
+
+    </SCRIPT>
+
+  </body>
+</html>
+      
