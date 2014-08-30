@@ -23,7 +23,7 @@
     <content src="index.html"/>
     <access origin="*"/>
     
-    <preference name="orienation" value="portrait" />
+    <preference name="orientation" value="portrait" />
 
     <gap:plugin name="org.apache.cordova.device-motion" version="0.2.6" />
 
