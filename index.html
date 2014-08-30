@@ -28,7 +28,7 @@
       }
     </style>
 
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <!--<script type="text/javascript" charset="utf-8" src="cordova.js"></script>-->
 
   </head>
   <body>
@@ -53,6 +53,8 @@
         return {
           x: evt.changedTouches[0].pageX - rect.left,
           y: evt.changedTouches[0].pageY - rect.top
+          /*x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top*/
         };
       }
       
@@ -118,15 +120,21 @@
 
       };
 
+      var mouseDown = false;
+      var img_width = "";
+      var img_height = "";
+      var padding = 0;
+      var canvas = "";
+      var context = "";
+
       function init(imageObj) {
-        var padding = 0;
+        padding = 0;
 
-        var img_width = imageObj.width;
-        var img_height = imageObj.height;
+        img_width = imageObj.width;
+        mg_height = imageObj.height;
 
-        var canvas = document.getElementById('myCanvas');
-        var context = canvas.getContext('2d');
-        var mouseDown = false;
+        canvas = document.getElementById('myCanvas');
+        context = canvas.getContext('2d');
 
         context.strokeStyle = '#444';
         context.lineWidth = 2;
@@ -146,7 +154,8 @@
 
         context.drawImage(imageObj, 0, 0);
 
-      }
+      };
+
       var imageObj = new Image();
       imageObj.onload = function() {
         init(this);
@@ -177,7 +186,7 @@
             $("#color_div").css("color", comp_color);
           }
         };
-      
+
     </script>
 
     <SCRIPT TYPE="text/javascript">
