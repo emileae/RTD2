@@ -144,7 +144,16 @@
           render_color(mousePos);
         }, false);
 
-        function render_color(mousePos){
+        context.drawImage(imageObj, 0, 0);
+
+      }
+      var imageObj = new Image();
+      imageObj.onload = function() {
+        init(this);
+      };
+      imageObj.src = 'images/color-picker.png';
+
+      function render_color(mousePos){
           var color = undefined;
 
           if(mouseDown && mousePos !== null) {
@@ -168,16 +177,7 @@
             $("#color_div").css("color", comp_color);
           }
         };
-
-        context.drawImage(imageObj, 0, 0);
-
-      }
-      var imageObj = new Image();
-      imageObj.onload = function() {
-        init(this);
-      };
-      imageObj.src = 'images/color-picker.png';
-
+      
     </script>
 
     <SCRIPT TYPE="text/javascript">
