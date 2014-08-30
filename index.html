@@ -40,7 +40,8 @@
 
       function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
-        console.log(evt.clientX - rect.left+", "+evt.clientY - rect.top);
+        console.log(rect);
+        console.log(evt.clientX);
         return {
           x: evt.clientX - rect.left,
           y: evt.clientY - rect.top
@@ -132,6 +133,7 @@
 
         canvas.addEventListener('touchmove', function(evt) {
           var mousePos = getMousePos(canvas, evt);
+          console.log(evt);
           console.log("touchmove");
           var color = undefined;
 
