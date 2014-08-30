@@ -41,11 +41,11 @@
       function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
         //console.log(rect);
-        console.log("evt");
-        console.log(evt);
+        console.log("rect");
+        console.log(rect);
         return {
-          x: evt.clientX - rect.left,
-          y: evt.clientY - rect.top
+          x: evt..changedTouches[0].pageX - rect.left,
+          y: evt..changedTouches[0].pageY - rect.top
         };
       }
       function rgbToHsl(r, g, b){
