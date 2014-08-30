@@ -31,6 +31,16 @@
         border: 1px solid red;
         position: absolute;
       }
+      .button{
+        width: 100%;
+        background-color: rgb(80, 80, 80);
+        color: rgb(200, 200, 200);
+        text-align: center;
+        padding: 10px;
+      }
+      .button:hover{
+        background-color: rgb(150, 150, 150);
+      }
     </style>
 
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
@@ -41,6 +51,10 @@
     <div id="color_div"></div>
     <div id="acc_div"></div>
     <div id="target"></div>
+    <div>
+      <div id="touch" class="button">Touch</div>
+      <div id="tilt" class="button">Tilt</div>
+    </div>  
 
     <SCRIPT TYPE="text/javascript" src="libs/jquery-1.11.1.min.js"></SCRIPT>
     <script>
@@ -60,6 +74,15 @@
       var context = "";
       var mousePos = {x: 100, y: 100};
       position_target(mousePos);
+
+      var touchtilt = true;
+
+      $("body").on("touchend", "#touch", function(){
+        touchtilt = false;
+      });
+      $("body").on("touchend", "#tilt", function(){
+        touchtilt = true;
+      });
 
       function componentToHex(c) {
       var hex = c.toString(16);
@@ -174,10 +197,12 @@
 
         canvas.addEventListener('touchmove', function(evt) {
           mousePos = getMousePos(canvas, evt);
-          render_color(mousePos, false);
+          render_color(mousePos, touchtilt);
         }, false);
 
         context.drawImage(imageObj, 0, 0);
+
+        render_color(mousePos, touchtilt);
 
       };
 
@@ -271,7 +296,7 @@
 
         //element.innerHTML = "x: "+Math.floor(x)+" y: "+Math.floor(y)+", mousePos: "+mousePos.x+", "+mousePos.y;
 
-        render_color(mousePos, true);
+        render_color(mousePos, touchtilt);
     };
 
     // Start watching the acceleration
