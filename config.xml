@@ -27,30 +27,10 @@
 
     <gap:plugin name="org.apache.cordova.device-motion" version="0.2.6" />
 
+    <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
+
     <preference name="webviewbounce" value="false"/>
     <preference name="UIWebViewBounce" value="false"/>
     <preference name="DisallowOverscroll" value="true"/>
 
 </widget>
-
-<!-- 
-    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.appspot.phonegap-staging.www" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>rtd</name>
-  <description>
-        Real Time Deals
-    </description>
-  <author email="dev@wearesupernice.com" href="http://www.wearesupernice.com/">
-      Supernice Team
-    </author>
-  <content src="index.html"/>
-  <access origin="*"/>
-  <preference name="webviewbounce" value="false"/>
-  <preference name="UIWebViewBounce" value="false"/>
-  <preference name="DisallowOverscroll" value="true"/>
-  <preference name="BackupWebStorage" value="none"/>
-  <feature name="StatusBar">
-    <param name="ios-package" value="CDVStatusBar" onload="true"/>
-  </feature>
-</widget>
--->
