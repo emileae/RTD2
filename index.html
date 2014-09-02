@@ -286,7 +286,9 @@
     function post_registration_id(reg_id){
         
         function post_success(data){
-          alert(data.message);
+          //alert(data.message);
+          console.log(data);
+          alert(JSON.stringify(data));
         };
 
         $.ajax({
@@ -295,7 +297,7 @@
             data: {"reg_id": reg_id},
             success: post_success
         }).fail(function(e){
-            alert("error - add reg_id");
+            alert(JSON.stringify(e));
         });
     }; 
     // This function needs to be global
