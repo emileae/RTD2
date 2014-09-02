@@ -376,13 +376,14 @@
       };*/
 
       function successHandler(result){
-        alert('Callback Success! Result = '+result)
+        alert('Callback Success! Result = '+result);
+        console.log(result);
       };
       function errorHandler(){
-        alert("error push")
+        alert("error push");
       };
       function tokenHandler(){
-        alert("tokenhandler push")
+        alert("tokenhandler push");
       };
 
       function onNotificationGCM(e) {
