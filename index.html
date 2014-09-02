@@ -352,9 +352,9 @@
 
       alert("push register");
       
-      $("#app-status-ul").append('<li>registering ' + device.platform + '</li>');
+      //$("#app-status-ul").append('<li>registering ' + device.platform + '</li>');
       
-      if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
+      //if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
 
           pushNotification.register(
           successHandler,
@@ -363,7 +363,7 @@
               "senderID":"343949178684",
               "ecb":"onNotificationGCM"
           });
-      } else {
+      /*} else {
           pushNotification.register(
           tokenHandler,
           errorHandler,
@@ -373,7 +373,7 @@
               "alert":"true",
               "ecb":"onNotificationAPN"
           });
-      };
+      };*/
 
       function successHandler(result){
         alert('Callback Success! Result = '+result)
