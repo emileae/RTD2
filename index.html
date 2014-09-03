@@ -332,6 +332,8 @@
     };
 
     function onNotificationAPN(event){
+      alert("notified APNS");
+      console.log(event);
       if ( event.alert )
       {
           navigator.notification.alert(event.alert);
@@ -459,8 +461,9 @@
       function errorHandler(){
         alert("error push");
       };
-      function tokenHandler(){
-        alert("tokenhandler push");
+      function tokenHandler(result){
+        alert(JSON.stringify(result));
+        console.log(result);
       };
 
     };
