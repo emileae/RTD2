@@ -303,7 +303,7 @@
     // This function needs to be global
     function onNotificationGCM(e) {
         alert("notified");
-        console.log(e);
+        //console.log(e);
         switch( e.event )
         {
             case 'registered':
@@ -344,6 +344,9 @@
         pushNotification = window.plugins.pushNotification;
         push_register();
         startWatch();
+
+        alert("Platform: "+device.platform);
+
     };
 
     function onSuccess(acceleration) {
@@ -429,7 +432,7 @@
 
       function successHandler(result){
         alert('Callback Success! Result = '+result);
-        console.log(result);
+        //console.log(result);
       };
       function errorHandler(){
         alert("error push");
