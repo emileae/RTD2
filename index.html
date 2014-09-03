@@ -329,9 +329,24 @@
               break;
         };
 
-        function onNotificationAPN(){
-          alert("shouldnt see this on android");
-        };
+    };
+
+    function onNotificationAPN(event){
+      if ( event.alert )
+      {
+          navigator.notification.alert(event.alert);
+      };
+
+      if ( event.sound )
+      {
+          var snd = new Media(event.sound);
+          snd.play();
+      };
+
+      if ( event.badge )
+      {
+          pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+      };
     };
 
     // Wait for device API libraries to load
@@ -418,7 +433,14 @@
               "senderID":"343949178684",
               "ecb":"onNotificationGCM"
           });
-      }/* else {
+      } else {
+          //var pushNotification = window.plugins.pushNotification;
+          /*pushNotification.registerDevice({alert:true, badge:true, sound:true}, function(status) {
+              alert(status);
+              alert(status.deviceToken);
+              //app.myLog.value+=JSON.stringify(['registerDevice status: ', status])+"\n";
+              //app.storeToken(status.deviceToken);
+          });*/
           pushNotification.register(
           tokenHandler,
           errorHandler,
@@ -428,7 +450,7 @@
               "alert":"true",
               "ecb":"onNotificationAPN"
           });
-      };*/
+      };
 
       function successHandler(result){
         alert('Callback Success! Result = '+result);
