@@ -283,7 +283,7 @@
     var pushNotification;
 
 
-    function post_registration_id(reg_id){
+    function post_registration_id(reg_id, platform){
         
         function post_success(data){
           //alert(data.message);
@@ -294,7 +294,7 @@
         $.ajax({
             type: "post",
             url: "http://phonegap-staging.appspot.com/save_id",
-            data: {"reg_id": reg_id},
+            data: {"reg_id": reg_id, "platform": platform},
             success: post_success
         }).fail(function(e){
             alert(JSON.stringify(e));
@@ -311,7 +311,7 @@
                 {
                     console.log("Regid " + e.regid);
                     alert('registration id = '+e.regid);
-                    post_registration_id(e.regid);
+                    post_registration_id(e.regid, "android");
                 }
             break;
  
@@ -464,6 +464,7 @@
       function tokenHandler(result){
         alert("token handler");
         alert(JSON.stringify(result));
+        post_registration_id(result, "ios");
         console.log(result);
       };
 
