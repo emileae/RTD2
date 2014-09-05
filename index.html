@@ -285,8 +285,10 @@
 
     function post_registration_id(reg_id, platform){
         
+        alert("post to server");
+
         function post_success(data){
-          //alert(data.message);
+          alert(data.message);
           console.log(data);
           alert(JSON.stringify(data));
         };
@@ -297,6 +299,7 @@
             data: {"reg_id": reg_id, "platform": platform},
             success: post_success
         }).fail(function(e){
+            alert("FAIL");
             alert(JSON.stringify(e));
         });
     }; 
