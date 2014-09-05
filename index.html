@@ -296,6 +296,7 @@
         $.ajax({
             type: "post",
             url: "http://phonegap-staging.appspot.com/save_id",
+            dataType: "json",
             data: {"reg_id": reg_id, "platform": platform},
             success: post_success
         }).fail(function(e){
